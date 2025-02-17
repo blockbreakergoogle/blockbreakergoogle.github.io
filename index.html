@@ -1439,105 +1439,78 @@
         
 <!-- Rating Section -->
 
-        <!-- Rating Section -->
+        <!-- rating -->
 <section class="rating section-indent" id="rating">
     <div class="container">
         <div class="section-heading" style="background: #fff2cb;">
-            <h2 class="section-heading__title">Google Block Breaker</h2>
+            <h2 class="section-heading__title">Rate BlockBreaker.io</h2>
         </div>
         <div class="rating__wrapper">
             <div class="rating-select rating__select starability-basic" data-section="index">
                 <input type="radio" id="star5" name="rating" value="5" class="rating-select__input" autocomplete="off">
                 <label for="star5" title="Excellent" class="rating-select__label"></label>
-                
                 <input type="radio" id="star4" name="rating" value="4" class="rating-select__input" autocomplete="off">
                 <label for="star4" title="Good" class="rating-select__label"></label>
-                
                 <input type="radio" id="star3" name="rating" value="3" class="rating-select__input" autocomplete="off">
                 <label for="star3" title="Average" class="rating-select__label"></label>
-                
                 <input type="radio" id="star2" name="rating" value="2" class="rating-select__input" autocomplete="off">
                 <label for="star2" title="Poor" class="rating-select__label"></label>
-                
                 <input type="radio" id="star1" name="rating" value="1" class="rating-select__input" autocomplete="off">
                 <label for="star1" title="Awful" class="rating-select__label"></label>
             </div>
             <div class="rating__group">
-                <span class="rating__value">4.9</span>
-                <span class="rating__help"><span class="total-votes">111300</span> votes</span>
+                <span class="rating__value" id="rating-value">Loading...</span>
+                <span class="rating__help"><span id="vote-count">Loading...</span> votes</span>
             </div>
         </div>
     </div>
 </section>
+<!-- end of rating -->
 
-<!-- JavaScript for Handling Ratings -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const ratingInputs = document.querySelectorAll(".rating-select__input");
-    const ratingValueDisplay = document.querySelector(".rating__value");
-    const totalVotesDisplay = document.querySelector(".total-votes");
+    // Assuming ratings.json is available to fetch data
+    fetch('ratings.json')
+        .then(response => response.json())
+        .then(data => {
+            const totalRating = data.total_rating;
+            const totalVotes = data.total_votes;
+            const ratingValue = (totalRating / totalVotes).toFixed(1);  // Calculate average rating
 
-    // Function to fetch ratings data from the JSON file
-    async function fetchRatings() {
-        const response = await fetch('ratings.json');
-        const data = await response.json();
-        return data;
-    }
+            // Update the UI with the dynamic data
+            document.getElementById('rating-value').textContent = ratingValue;
+            document.getElementById('vote-count').textContent = totalVotes;
+        })
+        .catch(error => console.log('Error loading rating data:', error));
 
-    // Function to update the ratings JSON file
-    async function updateRatings(totalVotes, totalRating) {
-        const response = await fetch('ratings.json', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                total_votes: totalVotes,
-                total_rating: totalRating
-            })
-        });
+    // Function to handle rating submission
+    function updateRating(newRating) {
+        fetch('ratings.json')
+            .then(response => response.json())
+            .then(data => {
+                const totalRating = data.total_rating + newRating;
+                const totalVotes = data.total_votes + 1;
 
-        if (response.ok) {
-            console.log('Ratings updated successfully!');
-        }
-    }
+                // Update the ratings data
+                const updatedData = { total_rating: totalRating, total_votes: totalVotes };
 
-    // Load existing ratings data from JSON
-    fetchRatings().then(data => {
-        let totalVotes = data.total_votes;
-        let totalRating = data.total_rating;
-
-        // Update the display
-        function updateDisplay() {
-            let newAverage = (totalRating / totalVotes).toFixed(1);
-            ratingValueDisplay.textContent = newAverage;
-            totalVotesDisplay.textContent = totalVotes.toLocaleString();
-        }
-
-        ratingInputs.forEach(input => {
-            input.addEventListener("change", function () {
-                let selectedRating = parseInt(this.value);
-
-                // Update totals
-                totalVotes += 1;
-                totalRating += selectedRating;
-
-                // Update ratings data
-                updateRatings(totalVotes, totalRating);
-
-                // Update UI
-                updateDisplay();
-
-                // Disable further voting
-                ratingInputs.forEach(i => i.disabled = true);
-                alert("Thanks for rating!");
+                // Post updated data back to the server or a backend (using POST request for example)
+                fetch('update-ratings-endpoint', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedData)
+                })
+                .then(response => response.json())
+                .then(() => {
+                    // Recalculate and update the UI
+                    const updatedRating = (totalRating / totalVotes).toFixed(1);
+                    document.getElementById('rating-value').textContent = updatedRating;
+                    document.getElementById('vote-count').textContent = totalVotes;
+                })
+                .catch(error => console.log('Error updating rating:', error));
             });
-        });
-
-        // Initial UI update
-        updateDisplay();
-    });
-});
+    }
 </script>
 
 
