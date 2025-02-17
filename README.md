@@ -14,7 +14,7 @@ Welcome to **Google Block Breaker**! This is an online block-breaking game where
 
 ## 🚀 Live Demo
 Play the game now:  
-🔗 [Click here to play Google Block Breaker](https://blockbreakergoogle.github.io/)👈
+🔗 Click here to play [Google Block Breaker](https://blockbreakergoogle.github.io/)👈
 
 ---
 
@@ -61,4 +61,4 @@ For any inquiries or contributions, feel free to reach out:
 - 📧 Email: contactmu97@gmail.com  
 - 🌐 Website: [Block Breaker](https://blockbreakergoogle.github.io/)
 
-🚀 Enjoy playing Block Breaker! 🎉
+🚀 Enjoy playing [Google Block Breaker](https://blockbreakergoogle.github.io/)! 🎉
