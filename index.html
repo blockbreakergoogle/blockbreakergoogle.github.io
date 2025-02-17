@@ -1438,6 +1438,8 @@
         
         
 <!-- Rating Section -->
+
+        <!-- Rating Section -->
 <section class="rating section-indent" id="rating">
     <div class="container">
         <div class="section-heading" style="background: #fff2cb;">
@@ -1468,77 +1470,75 @@
     </div>
 </section>
 
-<!-- JavaScript and Styling for Handling Ratings -->
+<!-- JavaScript for Handling Ratings -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const ratingInputs = document.querySelectorAll(".rating-select__input");
     const ratingValueDisplay = document.querySelector(".rating__value");
     const totalVotesDisplay = document.querySelector(".total-votes");
 
-    // Load existing ratings from localStorage
-    let totalVotes = localStorage.getItem("totalVotes") ? parseInt(localStorage.getItem("totalVotes")) : 111300;
-    let totalRating = localStorage.getItem("totalRating") ? parseFloat(localStorage.getItem("totalRating")) : totalVotes * 4.9;
-
-    // Function to update the display
-    function updateDisplay() {
-        let newAverage = (totalRating / totalVotes).toFixed(1);
-        ratingValueDisplay.textContent = newAverage;
-        totalVotesDisplay.textContent = totalVotes.toLocaleString(); // Format with commas
+    // Function to fetch ratings data from the JSON file
+    async function fetchRatings() {
+        const response = await fetch('ratings.json');
+        const data = await response.json();
+        return data;
     }
 
-    // Handling the rating input change
-    ratingInputs.forEach(input => {
-        input.addEventListener("change", function () {
-            let selectedRating = parseInt(this.value);
-            
-            // Update totals
-            totalVotes += 1;
-            totalRating += selectedRating;
-
-            // Save to localStorage
-            localStorage.setItem("totalVotes", totalVotes);
-            localStorage.setItem("totalRating", totalRating);
-
-            // Update UI
-            updateDisplay();
-
-            // Disable further voting
-            ratingInputs.forEach(i => i.disabled = true);
-            alert("Thanks for rating!");
+    // Function to update the ratings JSON file
+    async function updateRatings(totalVotes, totalRating) {
+        const response = await fetch('ratings.json', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                total_votes: totalVotes,
+                total_rating: totalRating
+            })
         });
-    });
 
-    // Initial UI update
-    updateDisplay();
+        if (response.ok) {
+            console.log('Ratings updated successfully!');
+        }
+    }
+
+    // Load existing ratings data from JSON
+    fetchRatings().then(data => {
+        let totalVotes = data.total_votes;
+        let totalRating = data.total_rating;
+
+        // Update the display
+        function updateDisplay() {
+            let newAverage = (totalRating / totalVotes).toFixed(1);
+            ratingValueDisplay.textContent = newAverage;
+            totalVotesDisplay.textContent = totalVotes.toLocaleString();
+        }
+
+        ratingInputs.forEach(input => {
+            input.addEventListener("change", function () {
+                let selectedRating = parseInt(this.value);
+
+                // Update totals
+                totalVotes += 1;
+                totalRating += selectedRating;
+
+                // Update ratings data
+                updateRatings(totalVotes, totalRating);
+
+                // Update UI
+                updateDisplay();
+
+                // Disable further voting
+                ratingInputs.forEach(i => i.disabled = true);
+                alert("Thanks for rating!");
+            });
+        });
+
+        // Initial UI update
+        updateDisplay();
+    });
 });
 </script>
-
-<style>
-/* Starability Styling (Customize as Needed) */
-.rating-select {
-    display: flex;
-    gap: 5px;
-}
-
-.rating-select__input {
-    display: none;
-}
-
-.rating-select__label {
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    background: url('star-empty.png') no-repeat center;
-    background-size: cover;
-    cursor: pointer;
-}
-
-.rating-select__input:checked ~ .rating-select__label,
-.rating-select__input:hover ~ .rating-select__label {
-    background: url('star-filled.png') no-repeat center;
-    background-size: cover;
-}
-</style>
 
 
       <!-- end of rating -->    
