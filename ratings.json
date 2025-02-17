@@ -1,4 +1,6 @@
-{
-    "total_votes": 111300,
-    "total_rating": 545370.0
+// Fetch the ratings data from the hosted JSON file
+async function fetchRatings() {
+    const response = await fetch('blockbreakergoogle.github.io/repository/ratings.json');
+    const data = await response.json();
+    return data;
 }
