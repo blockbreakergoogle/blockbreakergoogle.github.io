@@ -70,16 +70,34 @@
 
    <!-- Bing tag--> 
  <meta name="msvalidate.01" content="72A4CB6A25748F6DEA33F66807B3C1CF" />   
-
-
-<!-- Firebase App (core) -->
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-
-<!-- Firebase Firestore -->
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
     
 </head>
 <body>
+
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB8On1wg5EUPzj0jR2kTW38Nf7bFk_QNrI",
+    authDomain: "blockbreaker-fd9d7.firebaseapp.com",
+    databaseURL: "https://blockbreaker-fd9d7-default-rtdb.firebaseio.com",
+    projectId: "blockbreaker-fd9d7",
+    storageBucket: "blockbreaker-fd9d7.firebasestorage.app",
+    messagingSenderId: "957210901147",
+    appId: "1:957210901147:web:58c31c3b957735e465a43e",
+    measurementId: "G-R1YXP3LZRB"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
     <div class="wrapper">
 
@@ -1447,7 +1465,6 @@
         
 <!-- Rating Section -->
 
-        <!-- rating -->
 <section class="rating section-indent" id="rating">
     <div class="container">
         <div class="section-heading" style="background: #fff2cb;">
@@ -1467,14 +1484,12 @@
                 <label for="star1" title="Awful" class="rating-select__label"></label>
             </div>
             <div class="rating__group">
-                <span class="rating__value" id="rating-value">Loading...</span>
-                <span class="rating__help"><span id="vote-count">Loading...</span> votes</span>
+                <span class="rating__value" id="rating-value">10</span>
+                <span class="rating__help"><span id="vote-count">200000</span> votes</span>
             </div>
         </div>
     </div>
 </section>
-<!-- end of rating -->
-
 <script>
     // Assuming ratings.json is available to fetch data
     fetch('ratings.json')
