@@ -1462,7 +1462,7 @@
             </div>
             <div class="rating__group">
                 <span class="rating__value">4.9</span>
-                <span class="rating__help"><span class="total-votes">1,11,300</span> votes</span>
+                <span class="rating__help"><span class="total-votes">111300</span> votes</span>
             </div>
         </div>
     </div>
@@ -1476,7 +1476,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalVotesDisplay = document.querySelector(".total-votes");
 
     // Load existing ratings from localStorage
-    let totalVotes = localStorage.getItem("totalVotes") ? parseInt(localStorage.getItem("totalVotes")) : 1,11,300;
+    let totalVotes = localStorage.getItem("totalVotes") ? parseInt(localStorage.getItem("totalVotes")) : 111300;
     let totalRating = localStorage.getItem("totalRating") ? parseFloat(localStorage.getItem("totalRating")) : totalVotes * 4.9;
 
     function updateDisplay() {
