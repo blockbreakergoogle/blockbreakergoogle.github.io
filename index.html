@@ -1476,7 +1476,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const ratingValueDisplay = document.querySelector(".rating__value");
     const totalVotesDisplay = document.querySelector(".total-votes");
 
-    // Fetch existing data from Google Sheets via Web App
+    // Fetch initial data from Google Sheets via Web App
     fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec')  // Replace with your Web App URL
         .then(response => response.json())
         .then(data => {
@@ -1496,7 +1496,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedRating = parseInt(this.value);
 
             // Send the rating to Google Sheets via POST request
-            fetch('https://script.google.com/macros/s/AKfycbx3Xq6rvOlF_96S1KO426kAlUvCiDFZvKwN2rUl21TXFMDWd28u6k9InKpS2gYnJAtR3A/exec', { // Replace with your Web App URL
+            fetch('https://script.google.com/macros/s/AKfycbyfY4wTynRJmJLEj180DIzMqtTLLYl6add3YYe4WPOW0jIt-mqWgJz5mwvCzVnCkzY4EA/exec', { // Replace with your Web App URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
