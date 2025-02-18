@@ -1470,49 +1470,50 @@
 
 <!-- JavaScript for Handling Ratings -->
 
-<script>
 document.addEventListener("DOMContentLoaded", function () {
     const ratingInputs = document.querySelectorAll(".rating-select__input");
     const ratingValueDisplay = document.querySelector(".rating__value");
     const totalVotesDisplay = document.querySelector(".total-votes");
-    const scriptURL = "https://script.google.com/macros/s/AKfycbw6YOnZP2njDca9AKCPeb94AQYJXNLZa24NC__avcCyCZQJjdEPFb9HvJlcFagrr4lJbA/exec"; // Replace this with your Google Apps Script URL
 
-    // Fetch and display ratings
-    function fetchRating() {
-        fetch(scriptURL)
-            .then(response => response.json())
-            .then(data => {
-                let newAverage = (data.totalRating / data.totalVotes).toFixed(1);
-                ratingValueDisplay.textContent = newAverage;
-                totalVotesDisplay.textContent = data.totalVotes.toLocaleString();
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }
+    // Fetch existing data from Google Sheets
+    fetch('https://script.google.com/macros/s/AKfycbw6YOnZP2njDca9AKCPeb94AQYJXNLZa24NC__avcCyCZQJjdEPFb9HvJlcFagrr4lJbA/exec')
+        .then(response => response.json())
+        .then(data => {
+            // Initialize the display with fetched data
+            ratingValueDisplay.textContent = data.averageRating;
+            totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
+        });
 
-    // Handle the rating submission
+    // Handle rating submission
     ratingInputs.forEach(input => {
         input.addEventListener("change", function () {
-            let selectedRating = parseInt(this.value);
+            const selectedRating = parseInt(this.value);
 
-            fetch(scriptURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
+            // Send the rating to Google Sheets (via POST request)
+            fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({ rating: selectedRating })
             })
-            .then(response => response.text())
             .then(() => {
-                fetchRating(); // Re-fetch ratings after the user submits
-                ratingInputs.forEach(i => i.disabled = true); // Disable further voting
+                // After success, update the UI again with the latest data
+                fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec')
+                    .then(response => response.json())
+                    .then(data => {
+                        ratingValueDisplay.textContent = data.averageRating;
+                        totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
+                    });
+                
+                // Disable further voting
+                ratingInputs.forEach(i => i.disabled = true);
                 alert("Thanks for your rating!");
-            })
-            .catch(error => console.error('Error saving rating:', error));
+            });
         });
     });
-
-    // Initial load of ratings
-    fetchRating();
 });
-</script>
+
 
        
 
