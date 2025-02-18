@@ -1469,15 +1469,16 @@
 </section>
 
 <!-- JavaScript for Handling Ratings -->
-<script>
+
+ <script>
 document.addEventListener("DOMContentLoaded", function () {
     const ratingInputs = document.querySelectorAll(".rating-select__input");
     const ratingValueDisplay = document.querySelector(".rating__value");
     const totalVotesDisplay = document.querySelector(".total-votes");
-    const jsonURL = "https://blockbreakergoogle.github.io/ratings.json"; // Change to your JSON file URL
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwzkZWaxQ2z0mB9CkmKaUoIEYfr1Koxy6bVAaybuI4dlsTJtAKSFOP3fti18jTsUXvDUg/exec"; 
 
     function fetchRating() {
-        fetch(jsonURL)
+        fetch(scriptURL)
             .then(response => response.json())
             .then(data => {
                 let newAverage = (data.totalRating / data.totalVotes).toFixed(1);
@@ -1489,24 +1490,22 @@ document.addEventListener("DOMContentLoaded", function () {
     ratingInputs.forEach(input => {
         input.addEventListener("change", function () {
             let selectedRating = parseInt(this.value);
-            
-            fetch(jsonURL)
-                .then(response => response.json())
-                .then(data => {
-                    data.totalVotes += 1;
-                    data.totalRating += selectedRating;
-                    
-                    // Save updated data back to GitHub (only works if you manually update JSON)
-                    console.log("New rating:", data);
-                    alert("Rating saved! But updates will not reflect instantly.");
-                });
+            fetch(scriptURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ rating: selectedRating })
+            }).then(() => {
+                fetchRating();
+                ratingInputs.forEach(i => i.disabled = true); // Disable rating inputs after submission
+                alert("Thanks for rating! Your vote has been counted.");
+            });
         });
     });
 
-    fetchRating();
+    fetchRating(); // Load the rating data when the page loads
 });
 </script>
-
+       
 
 <!-- CSS for Styling -->
 <style>
