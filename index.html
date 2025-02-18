@@ -1482,7 +1482,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             // Initialize the display with fetched data
             ratingValueDisplay.textContent = data.averageRating;
-            totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
+
+            // Format total votes with commas (e.g., 1,11,300)
+            totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); 
         })
         .catch(error => {
             console.error("Error fetching data: ", error);
@@ -1494,7 +1496,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedRating = parseInt(this.value);
 
             // Send the rating to Google Sheets via POST request
-            fetch('https://script.google.com/macros/s/AKfycbys2ItIl4HKD_LVODBvoU2Q5Vw_0XGoYPQ4AaowHiGC0_JJLeQaW8xK49iGOqHk7bi5Xg/exec', { // Replace with your Web App URL
+            fetch('https://script.google.com/macros/s/AKfycbx3Xq6rvOlF_96S1KO426kAlUvCiDFZvKwN2rUl21TXFMDWd28u6k9InKpS2gYnJAtR3A/exec', { // Replace with your Web App URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1507,7 +1509,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(response => response.json())
                     .then(data => {
                         ratingValueDisplay.textContent = data.averageRating;
-                        totalVotesDisplay.textContent = data.totalVotes.toLocaleString();
+                        totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
                     })
                     .catch(error => {
                         console.error("Error fetching data after rating: ", error);
@@ -1523,6 +1525,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
 </script>
 
        
