@@ -56,7 +56,7 @@
 
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RS07L18M7F"></script>
-<script>
+<script> 
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -1438,6 +1438,8 @@
         <!-- end of description -->
         
     <!-- Rating Section -->
+
+        <!-- Rating Section -->
 <section class="rating section-indent" id="rating">
     <div class="container">
         <div class="section-heading" style="background: #fff2cb;">
@@ -1469,66 +1471,53 @@
 </section>
 
 <!-- JavaScript for Handling Ratings -->
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const ratingInputs = document.querySelectorAll(".rating-select__input");
     const ratingValueDisplay = document.querySelector(".rating__value");
     const totalVotesDisplay = document.querySelector(".total-votes");
 
-    // Fetch initial data from Google Sheets via Web App
-    fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec')  // Replace with your Web App URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyyEBFyYW8_BBafyKDpSpRqMl_s6SEdHuSxW2BChqJRActzSAAIA-RtEDRdprusEdvU-g/exec'; // Replace with your Google Script URL
+
+    function fetchRatings() {
+        fetch(scriptURL)
+            .then(response => response.json())
+            .then(data => {
+                let newAverage = (data.totalRating / data.totalVotes).toFixed(1);
+                ratingValueDisplay.textContent = newAverage;
+                totalVotesDisplay.textContent = data.totalVotes.toLocaleString();
+            });
+    }
+
+    function updateRatings(selectedRating) {
+        fetch(scriptURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({totalVotes: totalVotes + 1, totalRating: totalRating + selectedRating}),
+        })
         .then(response => response.json())
         .then(data => {
-            // Initialize the display with fetched data
-            ratingValueDisplay.textContent = data.averageRating;
-
-            // Format total votes with commas (e.g., 1,11,300)
-            totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); 
-        })
-        .catch(error => {
-            console.error("Error fetching data: ", error);
+            if (data.status === 'success') {
+                fetchRatings();
+            }
         });
+    }
 
-    // Handle rating submission
     ratingInputs.forEach(input => {
         input.addEventListener("change", function () {
-            const selectedRating = parseInt(this.value);
-
-            // Send the rating to Google Sheets via POST request
-            fetch('https://script.google.com/macros/s/AKfycbxeyxYfKoJ9Qjx2ihbRqOYIHn6vg7VG7n0dokUJpaokcGnhwCevjfGNHhssj4wwRA-OVw/exec', { // Replace with your Web App URL
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ rating: selectedRating })
-            })
-            .then(() => {
-                // After success, update the UI with the latest data
-                fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec')
-                    .then(response => response.json())
-                    .then(data => {
-                        ratingValueDisplay.textContent = data.averageRating;
-                        totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
-                    })
-                    .catch(error => {
-                        console.error("Error fetching data after rating: ", error);
-                    });
-
-                // Disable further voting
-                ratingInputs.forEach(i => i.disabled = true);
-                alert("Thanks for your rating!");
-            })
-            .catch(error => {
-                console.error("Error posting data: ", error);
-            });
+            let selectedRating = parseInt(this.value);
+            updateRatings(selectedRating);
+            ratingInputs.forEach(i => i.disabled = true);
+            alert("Thanks for rating!");
         });
     });
+
+    // Initial fetch
+    fetchRatings();
 });
-
 </script>
-
-       
 
 <!-- CSS for Styling -->
 <style>
