@@ -1477,45 +1477,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const ratingValueDisplay = document.querySelector(".rating__value");
     const totalVotesDisplay = document.querySelector(".total-votes");
 
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyyEBFyYW8_BBafyKDpSpRqMl_s6SEdHuSxW2BChqJRActzSAAIA-RtEDRdprusEdvU-g/exec'; // Replace with your Google Script URL
+    // Load existing ratings from localStorage
+    let totalVotes = localStorage.getItem("totalVotes") ? parseInt(localStorage.getItem("totalVotes")) : 111300;
+    let totalRating = localStorage.getItem("totalRating") ? parseFloat(localStorage.getItem("totalRating")) : totalVotes * 4.9;
 
-    function fetchRatings() {
-        fetch(scriptURL)
-            .then(response => response.json())
-            .then(data => {
-                let newAverage = (data.totalRating / data.totalVotes).toFixed(1);
-                ratingValueDisplay.textContent = newAverage;
-                totalVotesDisplay.textContent = data.totalVotes.toLocaleString();
-            });
-    }
-
-    function updateRatings(selectedRating) {
-        fetch(scriptURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({totalVotes: totalVotes + 1, totalRating: totalRating + selectedRating}),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                fetchRatings();
-            }
-        });
+    function updateDisplay() {
+        let newAverage = (totalRating / totalVotes).toFixed(1);
+        ratingValueDisplay.textContent = newAverage;
+        totalVotesDisplay.textContent = totalVotes.toLocaleString(); // Format with commas
     }
 
     ratingInputs.forEach(input => {
         input.addEventListener("change", function () {
             let selectedRating = parseInt(this.value);
-            updateRatings(selectedRating);
+
+            // Update totals
+            totalVotes += 1;
+            totalRating += selectedRating;
+
+            // Save to localStorage
+            localStorage.setItem("totalVotes", totalVotes);
+            localStorage.setItem("totalRating", totalRating);
+
+            // Update UI
+            updateDisplay();
+
+            // Disable further voting
             ratingInputs.forEach(i => i.disabled = true);
             alert("Thanks for rating!");
         });
     });
 
-    // Initial fetch
-    fetchRatings();
+    // Initial UI update
+    updateDisplay();
 });
 </script>
 
