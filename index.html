@@ -1471,50 +1471,46 @@
 <!-- JavaScript for Handling Ratings -->
 
 document.addEventListener("DOMContentLoaded", function () {
-    const ratingInputs = document.querySelectorAll(".rating-select__input");
-    const ratingValueDisplay = document.querySelector(".rating__value");
-    const totalVotesDisplay = document.querySelector(".total-votes");
+  const ratingInputs = document.querySelectorAll(".rating-select__input");
+  const ratingValueDisplay = document.querySelector(".rating__value");
+  const totalVotesDisplay = document.querySelector(".total-votes");
 
-    // Fetch existing data from Google Sheets
-    fetch('https://script.google.com/macros/s/AKfycbw6YOnZP2njDca9AKCPeb94AQYJXNLZa24NC__avcCyCZQJjdEPFb9HvJlcFagrr4lJbA/exec')
-        .then(response => response.json())
-        .then(data => {
-            // Initialize the display with fetched data
+  // Fetch existing data from Google Sheets
+  fetch('https://script.google.com/macros/s/AKfycbww6BRGEy2idndKW3YV5STdHH2IBxBz0-rgD5gN2XZ9THvcrr6H171pzRrOhpD1KCR3Fg/exec')
+    .then(response => response.json())
+    .then(data => {
+      // Initialize the display with fetched data
+      ratingValueDisplay.textContent = data.averageRating;
+      totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
+    });
+
+  // Handle rating submission
+  ratingInputs.forEach(input => {
+    input.addEventListener("change", function () {
+      const selectedRating = parseInt(this.value);
+
+      // Send the rating to Google Sheets (via POST request)
+      fetch('https://script.google.com/macros/s/your-deployed-web-app-id/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating: selectedRating })
+      })
+      .then(() => {
+        // After success, update the UI again with the latest data
+        fetch('https://script.google.com/macros/s/your-deployed-web-app-id/exec')
+          .then(response => response.json())
+          .then(data => {
             ratingValueDisplay.textContent = data.averageRating;
             totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
-        });
+          });
 
-    // Handle rating submission
-    ratingInputs.forEach(input => {
-        input.addEventListener("change", function () {
-            const selectedRating = parseInt(this.value);
-
-            // Send the rating to Google Sheets (via POST request)
-            fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ rating: selectedRating })
-            })
-            .then(() => {
-                // After success, update the UI again with the latest data
-                fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec')
-                    .then(response => response.json())
-                    .then(data => {
-                        ratingValueDisplay.textContent = data.averageRating;
-                        totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
-                    });
-                
-                // Disable further voting
-                ratingInputs.forEach(i => i.disabled = true);
-                alert("Thanks for your rating!");
-            });
-        });
+        // Disable further voting
+        ratingInputs.forEach(i => i.disabled = true);
+        alert("Thanks for your rating!");
+      });
     });
+  });
 });
-
-
        
 
 <!-- CSS for Styling -->
