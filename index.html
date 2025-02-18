@@ -1474,42 +1474,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const ratingInputs = document.querySelectorAll(".rating-select__input");
     const ratingValueDisplay = document.querySelector(".rating__value");
     const totalVotesDisplay = document.querySelector(".total-votes");
+    const jsonURL = "https://blockbreakergoogle.github.io/ratings.json"; // Change to your JSON file URL
 
-    // Load existing ratings from localStorage
-    let totalVotes = localStorage.getItem("totalVotes") ? parseInt(localStorage.getItem("totalVotes")) : 111300;
-    let totalRating = localStorage.getItem("totalRating") ? parseFloat(localStorage.getItem("totalRating")) : totalVotes * 4.9;
-
-    function updateDisplay() {
-        let newAverage = (totalRating / totalVotes).toFixed(1);
-        ratingValueDisplay.textContent = newAverage;
-        totalVotesDisplay.textContent = totalVotes.toLocaleString(); // Format with commas
+    function fetchRating() {
+        fetch(jsonURL)
+            .then(response => response.json())
+            .then(data => {
+                let newAverage = (data.totalRating / data.totalVotes).toFixed(1);
+                ratingValueDisplay.textContent = newAverage;
+                totalVotesDisplay.textContent = data.totalVotes.toLocaleString();
+            });
     }
 
     ratingInputs.forEach(input => {
         input.addEventListener("change", function () {
             let selectedRating = parseInt(this.value);
-
-            // Update totals
-            totalVotes += 1;
-            totalRating += selectedRating;
-
-            // Save to localStorage
-            localStorage.setItem("totalVotes", totalVotes);
-            localStorage.setItem("totalRating", totalRating);
-
-            // Update UI
-            updateDisplay();
-
-            // Disable further voting
-            ratingInputs.forEach(i => i.disabled = true);
-            alert("Thanks for rating!");
+            
+            fetch(jsonURL)
+                .then(response => response.json())
+                .then(data => {
+                    data.totalVotes += 1;
+                    data.totalRating += selectedRating;
+                    
+                    // Save updated data back to GitHub (only works if you manually update JSON)
+                    console.log("New rating:", data);
+                    alert("Rating saved! But updates will not reflect instantly.");
+                });
         });
     });
 
-    // Initial UI update
-    updateDisplay();
+    fetchRating();
 });
 </script>
+
 
 <!-- CSS for Styling -->
 <style>
