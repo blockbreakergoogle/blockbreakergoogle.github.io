@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Block Breaker - Play Fun Block-Breaking Game!</title>
     <meta name="description" content="Play Google Block Breaker, a fun and addictive block-breaking game. Beat challenging levels and test your skills. Free to play online!">
-    <meta name="keywords" content="google block breaker, block breaker, block breaker game, block breaker deluxe, block breaker game google, block breaker game online, block breaker online">
+    <meta name="keywords" content="google block breaker, block breaker google, block breaker, block breaker game, block breaker deluxe, block breaker game google, block breaker game online, block breaker online">
 
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -73,31 +73,6 @@
     
 </head>
 <body>
-
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyB8On1wg5EUPzj0jR2kTW38Nf7bFk_QNrI",
-    authDomain: "blockbreaker-fd9d7.firebaseapp.com",
-    databaseURL: "https://blockbreaker-fd9d7-default-rtdb.firebaseio.com",
-    projectId: "blockbreaker-fd9d7",
-    storageBucket: "blockbreaker-fd9d7.firebasestorage.app",
-    messagingSenderId: "957210901147",
-    appId: "1:957210901147:web:58c31c3b957735e465a43e",
-    measurementId: "G-R1YXP3LZRB"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
 
     <div class="wrapper">
 
@@ -1462,82 +1437,109 @@
         </section>
         <!-- end of description -->
         
-        
-<!-- Rating Section -->
-
+    <!-- Rating Section -->
 <section class="rating section-indent" id="rating">
     <div class="container">
         <div class="section-heading" style="background: #fff2cb;">
-            <h2 class="section-heading__title">Rate Google Block Breaker</h2>
+            <h2 class="section-heading__title">Google Block Breaker</h2>
         </div>
         <div class="rating__wrapper">
             <div class="rating-select rating__select starability-basic" data-section="index">
                 <input type="radio" id="star5" name="rating" value="5" class="rating-select__input" autocomplete="off">
                 <label for="star5" title="Excellent" class="rating-select__label"></label>
+
                 <input type="radio" id="star4" name="rating" value="4" class="rating-select__input" autocomplete="off">
                 <label for="star4" title="Good" class="rating-select__label"></label>
+
                 <input type="radio" id="star3" name="rating" value="3" class="rating-select__input" autocomplete="off">
                 <label for="star3" title="Average" class="rating-select__label"></label>
+
                 <input type="radio" id="star2" name="rating" value="2" class="rating-select__input" autocomplete="off">
                 <label for="star2" title="Poor" class="rating-select__label"></label>
+
                 <input type="radio" id="star1" name="rating" value="1" class="rating-select__input" autocomplete="off">
                 <label for="star1" title="Awful" class="rating-select__label"></label>
             </div>
             <div class="rating__group">
-                <span class="rating__value" id="rating-value">4.9</span>
-                <span class="rating__help"><span id="vote-count">1,23,200</span> votes</span>
+                <span class="rating__value">4.9</span>
+                <span class="rating__help"><span class="total-votes">1,11,300</span> votes</span>
             </div>
         </div>
     </div>
 </section>
+
+<!-- JavaScript for Handling Ratings -->
 <script>
-    // Assuming ratings.json is available to fetch data
-    fetch('ratings.json')
-        .then(response => response.json())
-        .then(data => {
-            const totalRating = data.total_rating;
-            const totalVotes = data.total_votes;
-            const ratingValue = (totalRating / totalVotes).toFixed(1);  // Calculate average rating
+document.addEventListener("DOMContentLoaded", function () {
+    const ratingInputs = document.querySelectorAll(".rating-select__input");
+    const ratingValueDisplay = document.querySelector(".rating__value");
+    const totalVotesDisplay = document.querySelector(".total-votes");
 
-            // Update the UI with the dynamic data
-            document.getElementById('rating-value').textContent = ratingValue;
-            document.getElementById('vote-count').textContent = totalVotes;
-        })
-        .catch(error => console.log('Error loading rating data:', error));
+    // Load existing ratings from localStorage
+    let totalVotes = localStorage.getItem("totalVotes") ? parseInt(localStorage.getItem("totalVotes")) : 111300;
+    let totalRating = localStorage.getItem("totalRating") ? parseFloat(localStorage.getItem("totalRating")) : totalVotes * 4.9;
 
-    // Function to handle rating submission
-    function updateRating(newRating) {
-        fetch('ratings.json')
-            .then(response => response.json())
-            .then(data => {
-                const totalRating = data.total_rating + newRating;
-                const totalVotes = data.total_votes + 1;
-
-                // Update the ratings data
-                const updatedData = { total_rating: totalRating, total_votes: totalVotes };
-
-                // Post updated data back to the server or a backend (using POST request for example)
-                fetch('update-ratings-endpoint', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updatedData)
-                })
-                .then(response => response.json())
-                .then(() => {
-                    // Recalculate and update the UI
-                    const updatedRating = (totalRating / totalVotes).toFixed(1);
-                    document.getElementById('rating-value').textContent = updatedRating;
-                    document.getElementById('vote-count').textContent = totalVotes;
-                })
-                .catch(error => console.log('Error updating rating:', error));
-            });
+    function updateDisplay() {
+        let newAverage = (totalRating / totalVotes).toFixed(1);
+        ratingValueDisplay.textContent = newAverage;
+        totalVotesDisplay.textContent = totalVotes.toLocaleString(); // Format with commas
     }
+
+    ratingInputs.forEach(input => {
+        input.addEventListener("change", function () {
+            let selectedRating = parseInt(this.value);
+
+            // Update totals
+            totalVotes += 1;
+            totalRating += selectedRating;
+
+            // Save to localStorage
+            localStorage.setItem("totalVotes", totalVotes);
+            localStorage.setItem("totalRating", totalRating);
+
+            // Update UI
+            updateDisplay();
+
+            // Disable further voting
+            ratingInputs.forEach(i => i.disabled = true);
+            alert("Thanks for rating!");
+        });
+    });
+
+    // Initial UI update
+    updateDisplay();
+});
 </script>
 
+<!-- CSS for Styling -->
+<style>
+/* Starability Styling (Customize as Needed) */
+.rating-select {
+    display: flex;
+    gap: 5px;
+}
 
-      <!-- end of rating -->    
+.rating-select__input {
+    display: none;
+}
+
+.rating-select__label {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background: url('star-empty.png') no-repeat center;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.rating-select__input:checked ~ .rating-select__label,
+.rating-select__input:hover ~ .rating-select__label {
+    background: url('star-filled.png') no-repeat center;
+    background-size: cover;
+}
+</style>
+        
+        <!-- end of rating -->    
 
         <!-- how to play -->
         <section class="how-to section-indent" id="how-to">
