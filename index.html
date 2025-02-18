@@ -1475,36 +1475,53 @@ document.addEventListener("DOMContentLoaded", function () {
     const ratingInputs = document.querySelectorAll(".rating-select__input");
     const ratingValueDisplay = document.querySelector(".rating__value");
     const totalVotesDisplay = document.querySelector(".total-votes");
-    const jsonURL = "https://script.google.com/macros/s/AKfycbys2ItIl4HKD_LVODBvoU2Q5Vw_0XGoYPQ4AaowHiGC0_JJLeQaW8xK49iGOqHk7bi5Xg/exec"; // Change to your JSON file URL
 
-    function fetchRating() {
-        fetch(jsonURL)
-            .then(response => response.json())
-            .then(data => {
-                let newAverage = (data.totalRating / data.totalVotes).toFixed(1);
-                ratingValueDisplay.textContent = newAverage;
-                totalVotesDisplay.textContent = data.totalVotes.toLocaleString();
-            });
-    }
+    // Fetch existing data from Google Sheets via Web App
+    fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec')  // Replace with your Web App URL
+        .then(response => response.json())
+        .then(data => {
+            // Initialize the display with fetched data
+            ratingValueDisplay.textContent = data.averageRating;
+            totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
+        })
+        .catch(error => {
+            console.error("Error fetching data: ", error);
+        });
 
+    // Handle rating submission
     ratingInputs.forEach(input => {
         input.addEventListener("change", function () {
-            let selectedRating = parseInt(this.value);
-            
-            fetch(jsonURL)
-                .then(response => response.json())
-                .then(data => {
-                    data.totalVotes += 1;
-                    data.totalRating += selectedRating;
-                    
-                    // Save updated data back to GitHub (only works if you manually update JSON)
-                    console.log("New rating:", data);
-                    alert("Rating saved! But updates will not reflect instantly.");
-                });
+            const selectedRating = parseInt(this.value);
+
+            // Send the rating to Google Sheets via POST request
+            fetch('https://script.google.com/macros/s/AKfycbys2ItIl4HKD_LVODBvoU2Q5Vw_0XGoYPQ4AaowHiGC0_JJLeQaW8xK49iGOqHk7bi5Xg/exec', { // Replace with your Web App URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ rating: selectedRating })
+            })
+            .then(() => {
+                // After success, update the UI with the latest data
+                fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec')
+                    .then(response => response.json())
+                    .then(data => {
+                        ratingValueDisplay.textContent = data.averageRating;
+                        totalVotesDisplay.textContent = data.totalVotes.toLocaleString();
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data after rating: ", error);
+                    });
+
+                // Disable further voting
+                ratingInputs.forEach(i => i.disabled = true);
+                alert("Thanks for your rating!");
+            })
+            .catch(error => {
+                console.error("Error posting data: ", error);
+            });
         });
     });
-
-    fetchRating();
 });
 </script>
 
