@@ -12,6 +12,8 @@ Welcome to **Google Block Breaker**! This is an online block-breaking game where
 
 ---
 
+![Bugs](http://i.imgur.com/K8vsw.gif "Bugs")
+
 ## 🚀 Live Demo
 Play the game now:  
 🔗 Click here to play [Google Block Breaker](https://blockbreakergoogle.github.io/)👈
