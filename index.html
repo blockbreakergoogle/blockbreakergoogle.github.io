@@ -1476,13 +1476,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const totalVotesDisplay = document.querySelector(".total-votes");
 
   // Fetch existing data from Google Sheets
-  fetch('https://script.google.com/macros/s/AKfycbww6BRGEy2idndKW3YV5STdHH2IBxBz0-rgD5gN2XZ9THvcrr6H171pzRrOhpD1KCR3Fg/exec')
+  fetch('https://script.google.com/macros/s/AKfycbw6YOnZP2njDca9AKCPeb94AQYJXNLZa24NC__avcCyCZQJjdEPFb9HvJlcFagrr4lJbA/exec') 
     .then(response => response.json())
     .then(data => {
       // Initialize the display with fetched data
       ratingValueDisplay.textContent = data.averageRating;
       totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
-    });
+    })
+    .catch(err => console.log('Error fetching rating data:', err));
 
   // Handle rating submission
   ratingInputs.forEach(input => {
@@ -1490,27 +1491,32 @@ document.addEventListener("DOMContentLoaded", function () {
       const selectedRating = parseInt(this.value);
 
       // Send the rating to Google Sheets (via POST request)
-      fetch('https://script.google.com/macros/s/your-deployed-web-app-id/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbww6BRGEy2idndKW3YV5STdHH2IBxBz0-rgD5gN2XZ9THvcrr6H171pzRrOhpD1KCR3Fg/exec', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ rating: selectedRating })
       })
       .then(() => {
         // After success, update the UI again with the latest data
-        fetch('https://script.google.com/macros/s/your-deployed-web-app-id/exec')
+        fetch('https://script.google.com/macros/s/AKfycbw6YOnZP2njDca9AKCPeb94AQYJXNLZa24NC__avcCyCZQJjdEPFb9HvJlcFagrr4lJbA/exec')
           .then(response => response.json())
           .then(data => {
             ratingValueDisplay.textContent = data.averageRating;
             totalVotesDisplay.textContent = data.totalVotes.toLocaleString(); // Format with commas
-          });
+          })
+          .catch(err => console.log('Error updating UI with new data:', err));
 
-        // Disable further voting
+        // Disable further voting (optional)
         ratingInputs.forEach(i => i.disabled = true);
         alert("Thanks for your rating!");
-      });
+      })
+      .catch(err => console.log('Error submitting rating:', err));
     });
   });
 });
+
        
 
 <!-- CSS for Styling -->
