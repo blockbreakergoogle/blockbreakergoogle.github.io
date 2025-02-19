@@ -1734,7 +1734,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <picture class="footer__logotype">
                     <img src="assets/img/block-breaker-logo.png" alt="Block Breaker">
                 </picture>
-                <p class="footer__copyright"><a href "https://blockbreakergoogle.github.io">block breaker</a> @2025 All rights reserved</p>
+                <p class="footer__copyright">blockbreakergoogle.github.io @ 2025 All rights reserved</p>
             </div>
 
             <ul class="footer__list">
@@ -1749,20 +1749,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 </li>
             </ul>
 
-            <!-- Language Selector Dropdown in Footer -->
+            <!-- Language Selector Dropdown -->
             <div class="footer__language">
                 <label for="languageSelector">🌍 Change Language:</label>
                 <select id="languageSelector">
-                    <option value="index.html">English</option>
+                    <option value="index-en.html">English</option>
                     <option value="fr.html">Français</option>
                     <option value="es.html">Español</option>
                     <option value="zh.html">中文 (Chinese)</option>
-                    <option value="hi.html">हिन्दी (Hindi)</option>
                     <option value="ar.html">العربية (Arabic)</option>
                     <option value="bn.html">বাংলা (Bengali)</option>
                     <option value="pt.html">Português</option>
                     <option value="ru.html">Русский</option>
-                    <option value="ur.html">اردو (Urdu)</option>
                 </select>
             </div>
         </div>
@@ -1770,10 +1768,40 @@ document.addEventListener("DOMContentLoaded", function () {
 </footer>
 
 <script>
+    // Language Map (ISO Codes -> Your Page URLs)
+    const languageMap = {
+        'en': 'index-en.html',
+        'fr': 'fr.html',
+        'es': 'es.html',
+        'zh': 'zh.html',
+        'ar': 'ar.html',
+        'bn': 'bn.html',
+        'pt': 'pt.html',
+        'ru': 'ru.html',
+    };
+
+    // Detect Browser Language
+    function detectUserLanguage() {
+        let userLang = navigator.language || navigator.userLanguage; 
+        userLang = userLang.split('-')[0]; // Extract language code (e.g., 'es-CO' -> 'es')
+
+        if (languageMap[userLang]) {
+            window.location.href = languageMap[userLang]; // Redirect to detected language page
+        }
+    }
+
+    // Auto Redirect (Only if not already on a language page)
+    if (!Object.values(languageMap).includes(window.location.pathname.split('/').pop())) {
+        detectUserLanguage();
+    }
+
+    // Change Language Manually
     document.getElementById("languageSelector").addEventListener("change", function() {
         window.location.href = this.value;
     });
-</script>    </div>
+</script>
+
+</div>
 
     <script src="assets/js/vendor.min7f46.js?v1.18"></script>
     <script src="assets/js/app7f46.js?v1.18"></script>
