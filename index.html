@@ -70,6 +70,39 @@
 
    <!-- Bing tag--> 
  <meta name="msvalidate.01" content="72A4CB6A25748F6DEA33F66807B3C1CF" />   
+
+ <!-- Auto-Redirect Based on Browser Language--> 
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let userLang = navigator.language || navigator.userLanguage;
+        userLang = userLang.substring(0, 2).toLowerCase();
+
+        const languageMap = {
+            "en": "index.html",
+            "fr": "fr.html",
+            "es": "es.html",
+            "zh": "zh.html",
+            "ar": "ar.html",
+            "bn": "bn.html",
+            "pt": "pt.html",
+            "ru": "ru.html"
+        };
+
+        // Check if user has previously selected a language
+        let savedLang = localStorage.getItem("selectedLanguage");
+
+        // If the user has a saved language, redirect to that
+        if (savedLang && languageMap[savedLang] && !window.location.href.includes(languageMap[savedLang])) {
+            window.location.href = languageMap[savedLang];
+        } 
+        // Otherwise, redirect based on browser language
+        else if (languageMap[userLang] && !window.location.href.includes(languageMap[userLang])) {
+            localStorage.setItem("selectedLanguage", userLang); // Save user choice
+            window.location.href = languageMap[userLang];
+        }
+    });
+</script>
+
     
 </head>
 <body>
@@ -1768,33 +1801,14 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("DOMContentLoaded", function () {
         const languageSelector = document.getElementById("languageSelector");
 
-        // Redirect user when language is selected
+        // Redirect to selected language page
         languageSelector.addEventListener("change", function () {
             let selectedLanguage = languageSelector.value;
-            window.location.href = selectedLanguage; // Redirects to selected language page
+            window.location.href = selectedLanguage; // Redirects to the selected language page
         });
-
-        // Auto-detect user's language and redirect (if a translation exists)
-        let userLang = navigator.language || navigator.userLanguage;
-        userLang = userLang.substring(0, 2); // Get first 2 characters (e.g., 'fr' from 'fr-FR')
-
-        const languageMap = {
-            "en": "index.html",
-            "fr": "fr.html",
-            "es": "es.html",
-            "zh": "zh.html",
-            "ar": "ar.html",
-            "bn": "bn.html",
-            "pt": "pt.html",
-            "ru": "ru.html"
-        };
-
-        // If user's language is available, redirect them automatically
-        if (languageMap[userLang] && !window.location.href.includes(languageMap[userLang])) {
-            window.location.href = languageMap[userLang];
-        }
     });
 </script>
+
 
 
 </div>
