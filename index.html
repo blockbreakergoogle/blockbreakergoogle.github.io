@@ -1736,20 +1736,44 @@ document.addEventListener("DOMContentLoaded", function () {
                 </picture>
                 <p class="footer__copyright">blockbreakergoogle.github.io @ 2025 All rights reserved</p>
             </div>
+
             <ul class="footer__list">
                 <li class="footer__item">
                     <a href="about.html" class="footer__link">About</a>
                 </li>
                 <li class="footer__item">
-                    <a href="mailto:contactmu97@gmail.com ?subject=Block Breaker" class="footer__link">Feedback</a>
+                    <a href="mailto:contactmu97@gmail.com?subject=Block Breaker" class="footer__link">Feedback</a>
                 </li>
                 <li class="footer__item">
                     <a href="privacy-policy.html" class="footer__link">Privacy Policy</a>
                 </li>
             </ul>
+
+            <!-- Language Selector Dropdown in Footer -->
+            <div class="footer__language">
+                <label for="languageSelector">🌍 Change Language:</label>
+                <select id="languageSelector">
+                    <option value="index-en.html">English</option>
+                    <option value="fr.html">Français</option>
+                    <option value="es.html">Español</option>
+                    <option value="zh.html">中文 (Chinese)</option>
+                    <option value="hi.html">हिन्दी (Hindi)</option>
+                    <option value="ar.html">العربية (Arabic)</option>
+                    <option value="bn.html">বাংলা (Bengali)</option>
+                    <option value="pt.html">Português</option>
+                    <option value="ru.html">Русский</option>
+                    <option value="ur.html">اردو (Urdu)</option>
+                </select>
+            </div>
         </div>
     </div>
-</footer>    </div>
+</footer>
+
+<script>
+    document.getElementById("languageSelector").addEventListener("change", function() {
+        window.location.href = this.value;
+    });
+</script>    </div>
 
     <script src="assets/js/vendor.min7f46.js?v1.18"></script>
     <script src="assets/js/app7f46.js?v1.18"></script>
