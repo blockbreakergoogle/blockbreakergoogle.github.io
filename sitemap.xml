@@ -22,12 +22,12 @@
         <loc>https://blockbreakergoogle.github.io/fr</loc>
         <lastmod>2025-02-20</lastmod>
         <changefreq>daily</changefreq>
-        <priority>0.7</priority>
+        <priority>1.0</priority>
     </url>
     <url>
         <loc>https://blockbreakergoogle.github.io/es</loc>
         <lastmod>2025-02-20</lastmod>
         <changefreq>daily</changefreq>
-        <priority>0.7</priority>
+        <priority>1.0</priority>
     </url>
 </urlset>
