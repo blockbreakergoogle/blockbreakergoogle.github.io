@@ -5,3 +5,5 @@ RewriteRule ^(.*)$ $1.html [L]
 Redirect 301 /index.html https://blockbreakergoogle.github.io/
 Redirect 301 /privacy-policy.html https://blockbreakergoogle.github.io/privacy-policy
 Redirect 301 /about.html https://blockbreakergoogle.github.io/about
+Redirect 301 /fr.html https://blockbreakergoogle.github.io/fr
+Redirect 301 /es.html https://blockbreakergoogle.github.io/es
