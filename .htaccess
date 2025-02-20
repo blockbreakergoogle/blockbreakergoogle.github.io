@@ -3,3 +3,5 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
 RewriteRule ^(.*)$ $1.html [L]
 Redirect 301 /index.html https://blockbreakergoogle.github.io/
+Redirect 301 /privacy-policy.html https://blockbreakergoogle.github.io/privacy-policy
+Redirect 301 /about.html https://blockbreakergoogle.github.io/about
