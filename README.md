@@ -3,6 +3,9 @@
 Welcome to **Google Block Breaker**! This is an online block-breaking game where players use a paddle and ball to break bricks and score points.
 
 ## 📑 Table of Contents
+- [What is Google Block Breaker?](#-What-is-Google-Block-Breaker?)
+- [Key Features of the Game](#-Key-Features-of-the-Game)
+- [Why is it So Addictive?](#-Why-is-it-So-Addictive?)
 - [🚀 Live Demo](#-live-demo)
 - [📌 Features](#-features)
 - [🔧 Setup and Installation](#-setup-and-installation)
@@ -11,7 +14,18 @@ Welcome to **Google Block Breaker**! This is an online block-breaking game where
 - [📩 Contact](#-contact)
 
 ---
+## What is Google Block Breaker?
+**[Block Breaker](https://google-blockbreaker.github.io)** is a classic arcade-style game where players use a paddle to bounce a ball and break blocks arranged in various patterns. The objective is to clear all the blocks while preventing the ball from falling past the paddle. As players progress, the game becomes more challenging with increased ball speed, complex block formations, and power-ups that can either aid or hinder their performance. Its straightforward yet engaging gameplay has made it a favorite among casual gamers for years.
 
+---
+## Key Features of the Game
+Despite its simple mechanics, **[Google Block Breaker](https://google-blockbreaker.github.io)** offers several features that enhance its appeal. The intuitive controls make it easy to play, while the progressively increasing difficulty keeps players engaged. Power-ups introduce an element of unpredictability, as they can provide advantages or unexpected obstacles. This blend of simplicity and challenge ensures that players remain hooked, always striving to beat their previous best.
+
+---
+## Why is it So Addictive?
+The game's addictive quality comes from several key factors. First, the instant feedback from each successful hit creates a sense of accomplishment, motivating players to continue. Second, the gradual difficulty increase keeps the gameplay fresh and engaging. Lastly, the repetitive yet rewarding nature of the game can be surprisingly relaxing, offering a perfect escape from daily stress.
+
+---
 ![Bugs](http://i.imgur.com/K8vsw.gif "Bugs")
 
 ## 🚀 Live Demo
@@ -61,6 +75,6 @@ This project is licensed under the **MIT License**.
 ## 📩 Contact
 For any inquiries or contributions, feel free to reach out:
 - 📧 Email: contactmu97@gmail.com  
-- 🌐 Website: [Block Breaker](https://google-blockbreaker.github.io)
+- 🌐 Website: [Google Block Breaker](https://blockbreakergoogle.github.io/)
 
 🚀 Enjoy playing [Google Block Breaker](https://blockbreakergoogle.github.io/)! 🎉
