@@ -19,7 +19,7 @@ Welcome to **Google Block Breaker**! This is an online block-breaking game where
 
 ---
 ## Key Features of the Game
-Despite its simple mechanics, **[Google Block Breaker](https://google-blockbreaker.github.io)** offers several features that enhance its appeal. The intuitive controls make it easy to play, while the progressively increasing difficulty keeps players engaged. Power-ups introduce an element of unpredictability, as they can provide advantages or unexpected obstacles. This blend of simplicity and challenge ensures that players remain hooked, always striving to beat their previous best.
+Despite its simple mechanics, **Google Block Breaker** offers several features that enhance its appeal. The intuitive controls make it easy to play, while the progressively increasing difficulty keeps players engaged. Power-ups introduce an element of unpredictability, as they can provide advantages or unexpected obstacles. This blend of simplicity and challenge ensures that players remain hooked, always striving to beat their previous best.
 
 ---
 ## Why is it So Addictive?
@@ -75,6 +75,6 @@ This project is licensed under the **MIT License**.
 ## 📩 Contact
 For any inquiries or contributions, feel free to reach out:
 - 📧 Email: contactmu97@gmail.com  
-- 🌐 Website: [Google Block Breaker](https://google-blockbreaker.github.io)
+- 🌐 Website: https://google-blockbreaker.github.io
 
-🚀 Enjoy playing [Google Block Breaker](https://google-blockbreaker.github.io)! 🎉
+🚀 Enjoy playing 🎉🎉🎉🎉🎉🎉
