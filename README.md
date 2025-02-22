@@ -61,6 +61,6 @@ This project is licensed under the **MIT License**.
 ## 📩 Contact
 For any inquiries or contributions, feel free to reach out:
 - 📧 Email: contactmu97@gmail.com  
-- 🌐 Website: [Block Breaker](https://blockbreakergoogle.github.io/)
+- 🌐 Website: [Block Breaker](https://google-blockbreaker.github.io)
 
 🚀 Enjoy playing [Google Block Breaker](https://blockbreakergoogle.github.io/)! 🎉
