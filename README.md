@@ -31,6 +31,7 @@ The game's addictive quality comes from several key factors. First, the instant 
 ## 🚀 Live Demo
 Play the game now:  
 🔗 Click here to play [Google Block Breaker](https://google-blockbreaker.github.io)👈
+👉 Play Now: **[Doodle Cricket](https://doodlecricket.org)**
 
 ---
 
