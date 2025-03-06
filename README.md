@@ -15,7 +15,7 @@ Welcome to **Google Block Breaker**! This is an online block-breaking game where
 
 ---
 ## What is Google Block Breaker?
-**[Block Breaker](https://google-blockbreaker.github.io)** is a classic arcade-style game where players use a paddle to bounce a ball and break blocks arranged in various patterns. The objective is to clear all the blocks while preventing the ball from falling past the paddle. As players progress, the game becomes more challenging with increased ball speed, complex block formations, and power-ups that can either aid or hinder their performance. Its straightforward yet engaging gameplay has made it a favorite among casual gamers for years.
+**[Block Breaker](https://googleblockbreaker.pro)** is a classic arcade-style game where players use a paddle to bounce a ball and break blocks arranged in various patterns. The objective is to clear all the blocks while preventing the ball from falling past the paddle. As players progress, the game becomes more challenging with increased ball speed, complex block formations, and power-ups that can either aid or hinder their performance. Its straightforward yet engaging gameplay has made it a favorite among casual gamers for years.
 
 ---
 ## Key Features of the Game
@@ -30,7 +30,7 @@ The game's addictive quality comes from several key factors. First, the instant 
 
 ## 🚀 Live Demo
 Play the game now:  
-🔗 Click here to play [Google Block Breaker](https://google-blockbreaker.github.io)👈
+🔗 Click here to play [Google Block Breaker](https://googleblockbreaker.pro/)👈
 👉 Play Now: **[Doodle Cricket](https://doodlecricket.org)**
 
 ---
